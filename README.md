@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RedLedger
 
-## Getting Started
+Autonomous finance that learns from failure. A deterministic AP duplicate-detection
+system with versioned, auditable controls and a live adversarial "Chaos CFO" that
+tries to find the next blind spot.
 
-First, run the development server:
+## Run it
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Routes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Route | What it shows |
+| --- | --- |
+| `/` | Control room dashboard — live stats, incident list, dependency graph |
+| `/incident/INC-014` | September: a $12,000 obligation split into two invoices, v1 misses it, human corrects it |
+| `/controls` | v1 → v2 control diff — literal, not narrated |
+| `/incident/INC-021` | October: a harder, structurally different split, v2 catches it automatically |
+| `/chaos` | Chaos CFO — procedurally generates a new scenario and scores it live against v2 |
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## What's real vs. templated
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The scoring engine (`lib/scorer.ts`), control versioning (`lib/controls.ts`), and
+seed dataset (`lib/seed-data.ts`) are pure functions — every score shown anywhere
+in the app is computed live, including in the Chaos CFO generator
+(`lib/chaos-generator.ts`). Agent narration (`lib/agents.ts`) is templated from
+that real data rather than calling a model, so the demo has no external API
+dependency; swapping it for a live Claude call is the first item on the roadmap.

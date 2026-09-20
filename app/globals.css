@@ -1,26 +1,110 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f8f3ee;
+  --bg-panel: #fffcfa;
+  --bg-panel-raised: #f3e9e3;
+  --border: #e6dcd3;
+  --border-strong: #b3a397;
+  --text: #221a1c;
+  --text-dim: #4a3b38;
+  --text-faint: #786a65;
+  --accent-red: #96182a;
+  --accent-red-soft: #e7c3c6;
+  --accent-orange: #8f463d;
+  --accent-orange-soft: #e8d3cd;
+  --accent-green: #2f6b45;
+  --accent-green-soft: #cfe3d4;
+  --accent-cyan: #5d63a0;
+  --accent-cyan-soft: #dcdfef;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, var(--font-geist-sans), "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: -apple-system, BlinkMacSystemFont, var(--font-geist-sans), "Segoe UI", ui-sans-serif, system-ui, sans-serif;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-panel: var(--bg-panel);
+  --color-bg-panel-raised: var(--bg-panel-raised);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text: var(--text);
+  --color-text-dim: var(--text-dim);
+  --color-text-faint: var(--text-faint);
+  --color-accent-red: var(--accent-red);
+  --color-accent-orange: var(--accent-orange);
+  --color-accent-green: var(--accent-green);
+  --color-accent-cyan: var(--accent-cyan);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: light;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: -1px -1px;
+  background-attachment: fixed;
+}
+
+::selection {
+  background: var(--accent-red-soft);
+  color: var(--accent-red);
+}
+
+.rl-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+}
+
+.rl-panel-raised {
+  background: var(--bg-panel-raised);
+  border: 1px solid var(--border-strong);
+}
+
+.rl-mono {
+  font-family: var(--font-mono);
+}
+
+.rl-serif {
+  font-family: var(--font-serif);
+  letter-spacing: -0.02em;
+}
+
+.rl-glow-red {
+  box-shadow: 0 1px 2px rgba(168, 32, 47, 0.08), 0 0 0 1px var(--accent-red-soft), 0 8px 24px -12px rgba(168, 32, 47, 0.35);
+}
+
+.rl-glow-green {
+  box-shadow: 0 1px 2px rgba(62, 124, 85, 0.08), 0 0 0 1px var(--accent-green-soft), 0 8px 24px -12px rgba(62, 124, 85, 0.3);
+}
+
+.rl-glow-orange {
+  box-shadow: 0 1px 2px rgba(168, 89, 79, 0.08), 0 0 0 1px var(--accent-orange-soft), 0 8px 24px -12px rgba(168, 89, 79, 0.3);
+}
+
+@keyframes rl-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.rl-blink {
+  animation: rl-blink 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rl-blink,
+  .rl-pulse-dot,
+  .rl-scan {
+    animation: none !important;
+  }
 }
